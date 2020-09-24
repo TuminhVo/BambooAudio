@@ -1,0 +1,112 @@
+$pixel-color-map: (
+    'l': #5ac528,
+    'o': transparent,
+    'p': hotpink,
+    'y': #ff0,
+    'g': green
+  );
+  
+// Size of the pixels
+$pixel-size: 5px !default;
+
+// Pixel art matrix or matrices!
+$pixel-art:(
+  bamboo: (
+    (o o o o o o o o o o o o o o o o o o o o o o o g l g o o g y l l g o)
+    (o o o o o o o o o o o o o o o o o o o o o o o g l g o l y l g g o o)
+    (o o o o o o o o o o o o o o o o o o o o o o o o g l g l l g o o o o)
+    (o o o o o o o o o o o o o o o o o o o o o o o o o l g g l l g o o o)
+    (o o o o o o o o o o o o o o g g g g g g g o o o l g o o g l y g o o)
+    (o o o o o o o o o o o l o g g g y y y y g g o l g o o o o g l y g o)
+    (o o o o o o o o o l l g o g g y y y l l g g l g o o o o o o g g y g)
+    (g g g g g o o o l y g o o g y g g g g g y g g o o o o o o o o g g o)
+    (o g y y y g o o l l g o o g y l l l l l y g o o o o o o o o o o g g)
+    (o o g l l y g o o g o o o g y l l l l l y g o o o o o o o o o o o g)
+    (o o o g g g l g o g o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o g l g o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o g g l o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o g l o o g y g l l l g y g o o o o o o o o o o o o)
+    (o o o o o o o o o o g l o g p p l l l p p g o o o o o o o o o o o o)
+    (o o o o o o o o o g o g l g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o g g o o g g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o g l g o o l g l l l l l l l g l o o o o o o o o o o o)
+    (o o o o o o o g g o o o g l g l l l l l g l g o o o o o o o o o o o)
+    (o o o o o o o g o o o o o g l g g g g g l g o o o o o o o o o o o o)
+    (o o o o o o g o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o g y l l l l l y g o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o o g l l l l l g o o o o o o o o o o o o o)
+    (o o o o o o o o o o o o o o o g g g g g o o o o o o o o o o o o o o)
+  ),
+);
+
+// Function to read the matrix and pixelize it!
+@function pixelize($matrix, $size){
+    $l: length($matrix); // length of the entire
+    $sh: ''; // shadows list
+    $i: $l; // length of the line
+
+    // read through the length of the matrix and decide on the box shadow color and position
+    @for $i from 1 through $l{
+      $row: nth($matrix,$i); //
+
+      @for $j from 1 through length($row){
+          $item: nth($row,$j);
+
+          @if map-has-key($pixel-color-map, $item) {
+            $sh:  $sh + ($j*$size) + ' ' + ($i*$size) + ' ' + map-get($pixel-color-map, $item);
+          } @else {
+            @warn 'there is no color specified in "$pixel-color-map" for: "#{$item}"';
+          }
+
+        @if not ($j == length($row) and $i == $l) {
+          $sh: $sh + ',';
+        }
+      }
+    }
+
+    @return unquote($sh);
+}
+  
+// Mixin to style each item
+@mixin style-item($matrix, $size){
+  position: relative; // pixels stack next to each other
+
+  // set width & height of icon based on size of pixels
+  width:($size * length(nth($matrix,1)));
+  height:($size * length($matrix));
+
+  &:after{
+    content: '';
+
+    // position everything from the top left corner
+    position: absolute;
+    top: (-$size);
+    left: (-$size);
+    width: $size;
+    height: $size;
+
+    // this is where we make the stitch
+    box-shadow: pixelize($matrix, $size);
+  }
+}
+
+.pixel-art{
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: inline-block;
+  }
+
+   @each $key, $value in $pixel-art{
+    &--#{$key}{
+      @include style-item($value, $pixel-size);
+    }
+  }
+}

@@ -1,11 +1,9 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+@import 'reset';
+@import 'logo';
 
 body {
     max-width: 500px;
-    margin: 2rem auto;
+    margin: 0 auto;
     background-color: #FFF;
 }
 
@@ -13,13 +11,6 @@ body {
     height: 100px;
 }
 
-.logo {
-    width: 2px;
-    height: 2px;
-    background-color: green;
-    top: 50;
-    left: 50;
-}
 
 .line-1 {
     height: 1px;
