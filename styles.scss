@@ -52,3 +52,29 @@ body {
     height: 1px;
     background-color: green;
 }
+
+.hero {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-image: url('bamboo.jpg');
+        background-size: cover;
+        background-position: top center;
+        opacity: 0.6;
+    }
+}
+
+h1 {
+    font-size: 4rem;
+    text-align: center;
+}
