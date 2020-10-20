@@ -1,0 +1,12 @@
+:root { /* Green color palette */
+    --pastel-green: #78d878;
+    --mantis: #78c060;
+    --endo: #60a860;
+}
+
+body {
+    font-size: 16px;
+    color: #fff;
+    background-color: var(--pastel-green);
+    font-family: 'Oxygen', sans-serif;
+}
