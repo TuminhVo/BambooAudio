@@ -89,10 +89,46 @@ body {
 }
 /* END HEADER */
 
+/* HOME PAGE */
 .container .jumbotron {
   box-shadow: 0 0 50px #3F0C1F;
   border: 2px solid #3F0C1F;
 }
+
+#products-tile, #accessories-tile, #map-tile {
+  height: 250px;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  border: 2px solid #3F0C1F;
+  overflow: hidden;
+}
+#products-tile:hover, #accessories-tile:hover, #map-tile:hover {
+  box-shadow: 0 1px 5px 1px #cccccc;
+}
+
+#products-tile {
+  background: url('../images/products-tile.jpg') no-repeat;
+  background-position: top center;
+}
+#accessories-tile {
+  background: url('../images/accessories-tile.jpg') no-repeat;
+  background-position: top center;
+}
+
+#products-tile span, #accessories-tile span, #map-tile span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.6em;
+  text-transform: uppercase;
+  background-color: #000;
+  color: #fff;
+  opacity: .8;
+}
+/* END HOME PAGE */
 
 /********** Large devices only **********/
 @media (min-width: 1200px) {
@@ -202,5 +238,26 @@ body {
     margin-top: 30px;
     padding: 0;
   }
+
+  #products-tile, #accessories-tile {
+    width: 360px;
+    margin: 0 auto 15px;
+  }
   /* End Home Page */
+}
+
+/********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
+@media (max-width: 479px) {
+  /* Header */
+  .navbar-brand h1 { /* Restaurant name */
+    padding-top: 5px;
+    font-size: 6vw;
+  }
+  /* End Header */
+  
+  /* Home page */
+  #products-tile, #accessories-tile {
+    width: 100%;
+    margin: 0 auto 15px;
+  }
 }
